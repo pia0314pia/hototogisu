@@ -4,6 +4,15 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>不如帰診断</title>
+
+<!-- ★ X(Twitter)などのSNSでシェアされた時に画像を表示するための設定 -->
+<meta property="og:title" content="不如帰診断">
+<meta property="og:description" content="あなたは信長？秀吉？家康？ホトトギスでわかるあなたのタイプ！">
+<meta property="og:url" content="https://pia0314piagreendice.github.io/hototogisu/">
+<!-- ★ 画像URLの末尾に「?v=2」を追加し、Xに強制的に再読み込みさせます -->
+<meta property="og:image" content="https://pia0314piagreendice.github.io/hototogisu/ogp.png?v=2">
+<meta name="twitter:card" content="summary_large_image">
+
 <style>
     body {
         font-family: 'Hiragino Mincho ProN', 'Yu Mincho', serif;
@@ -12,36 +21,34 @@
         display: flex;
         flex-direction: column;
         align-items: center;
-        /* 画面上部から配置を開始 */
-        justify-content: flex-start;
-        height: 100vh; /* 古いブラウザ用のフォールバック */
-        height: 100dvh; /* スマホのアドレスバーを考慮した高さ */
+        justify-content: space-between;
+        height: 100vh;
+        height: 100dvh; 
         margin: 0;
-        /* 全体の上下に少しだけ余白を持たせる */
-        padding: 3vh 15px 4vh;
+        padding: 2vh 10px;
         box-sizing: border-box;
-        overflow: hidden;
+        overflow: hidden; 
         user-select: none;
         -webkit-user-select: none;
-        touch-action: none;
+        touch-action: manipulation;
     }
 
     #title-area {
-        /* タイトルを最上部に固定するため縮小を防ぐ */
         flex-shrink: 0;
-        font-size: 52px; /* PC用に少し大きく */
+        font-size: min(10vw, 42px); 
         font-weight: bold;
         text-align: center;
         z-index: 10;
         background: #2c3e50;
         color: #fdfdfd;
-        padding: 10px 50px 18px;
+        padding: 8px 30px 12px;
         border: 2px solid #d4af37;
         border-radius: 8px;
         box-shadow: 0 4px 10px rgba(0,0,0,0.3);
         text-shadow: 2px 2px 4px rgba(0,0,0,0.6);
         position: relative;
         line-height: 1.2;
+        margin-top: 2vh;
     }
     #title-area::before {
         content: '';
@@ -71,9 +78,9 @@
         left: 50%;
         cursor: grab;
         z-index: 100;
+        touch-action: none;
     }
     #char-kuchi:active { cursor: grabbing; }
-
     #char-kuchi::after {
         content: '';
         position: absolute;
@@ -81,7 +88,6 @@
     }
 
     #center-area {
-        /* タイトルと下部ボタンの間（中央の空間すべて）を使用する */
         flex-grow: 1;
         width: 100%;
         display: flex;
@@ -92,9 +98,8 @@
     
     #bird {
         position: relative;
-        /* 鳥のサイズを拡大 */
-        width: 260px;
-        height: 260px;
+        width: min(60vw, 35vh, 260px);
+        height: min(60vw, 35vh, 260px);
     }
     
     .bird-svg-container {
@@ -116,14 +121,14 @@
 
     #note {
         position: absolute;
-        font-size: 22px; /* 吹き出しも大きく */
+        font-size: min(5vw, 22px);
         font-weight: bold;
         color: #ff4081;
         background: rgba(255, 255, 255, 0.95);
         border: 2px solid #ff4081;
-        padding: 8px 14px;
-        border-radius: 24px;
-        top: -15px; right: -80px;
+        padding: 6px 12px;
+        border-radius: 20px;
+        top: -15px; right: -20%;
         opacity: 0;
         transition: opacity 0.5s, transform 0.5s;
         white-space: nowrap;
@@ -131,8 +136,8 @@
     }
     #note::after {
         content: ''; position: absolute;
-        bottom: -10px; left: 25px;
-        border-width: 10px 10px 0;
+        bottom: -8px; left: 20px;
+        border-width: 8px 8px 0;
         border-style: solid;
         border-color: #ff4081 transparent transparent transparent;
         display: block; width: 0;
@@ -144,7 +149,7 @@
 
     #kanji-naku {
         display: none;
-        font-size: 200px; /* 「鳴」の文字も拡大 */
+        font-size: min(50vw, 25vh, 200px);
         font-weight: bold;
         background: linear-gradient(to bottom, #d4af37, #b8860b);
         -webkit-background-clip: text;
@@ -163,25 +168,25 @@
         display: flex;
         flex-direction: column;
         align-items: center;
-        gap: 20px;
-        z-index: 50;
+        gap: 2vh;
+        margin-bottom: 2vh;
     }
     
     #sword {
-        /* 剣のサイズを拡大 */
-        width: 130px;
-        height: 130px;
+        width: min(30vw, 15vh, 130px);
+        height: min(30vw, 15vh, 130px);
         cursor: grab;
         position: relative;
         z-index: 200;
         padding: 5px;
         transition: opacity 0.3s;
+        touch-action: none;
     }
     #sword:active { cursor: grabbing; }
 
     #reset-btn {
-        padding: 12px 35px;
-        font-size: 16px;
+        padding: 10px 30px;
+        font-size: min(4vw, 16px);
         font-weight: bold;
         cursor: pointer;
         background-color: #4a4a4a;
@@ -189,7 +194,7 @@
         border: 2px solid #333;
         border-radius: 6px;
         box-shadow: 0 3px 5px rgba(0,0,0,0.3);
-        transition: background-color 0.2s, transform 0.1s;
+        transition: transform 0.1s;
     }
     #reset-btn:active { transform: scale(0.95); }
 
@@ -218,7 +223,6 @@
         transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     }
     #result-modal.show .modal-content { transform: scale(1); }
-
     .modal-title-text { font-size: 18px; color: #555; margin-bottom: 10px; }
     
     #modal-text {
@@ -229,47 +233,33 @@
         text-shadow: 1px 1px 3px rgba(0,0,0,0.2);
     }
 
+    .modal-buttons {
+        display: flex;
+        justify-content: center;
+        gap: 15px;
+        margin-top: 10px;
+    }
+    #share-x-btn {
+        background: #000; color: #fff;
+        border: none; padding: 10px 20px;
+        font-size: 16px; font-weight: bold;
+        border-radius: 6px; cursor: pointer;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+        transition: transform 0.1s;
+    }
+    #share-x-btn:active { transform: scale(0.95); }
     #modal-close-btn {
         background: #2c3e50; color: #fff;
         border: none; padding: 10px 25px;
         font-size: 16px; font-weight: bold;
         border-radius: 6px; cursor: pointer;
         box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+        transition: transform 0.1s;
     }
     #modal-close-btn:active { transform: scale(0.95); }
 
-    /* ★ スマホ画面向けの調整：要素を全体的に大きくして隙間を減らす */
     @media screen and (max-width: 768px) {
-        body {
-            padding: 2vh 10px 3vh; /* 上下左右の余白設定 */
-        }
-        #title-area {
-            font-size: 38px; /* スマホでも見栄えがするよう文字を大きく */
-            padding: 8px 10px 12px; 
-            width: 95%; 
-            box-sizing: border-box;
-        }
-        #bird {
-            width: 220px; /* 鳥をスマホ画面いっぱいまで拡大 */
-            height: 220px;
-        }
-        #note {
-            font-size: 18px;
-            right: -40px;
-        }
-        #kanji-naku {
-            font-size: 160px;
-        }
-        #bottom-area {
-            gap: 15px; 
-        }
-        #sword {
-            width: 110px; /* 剣も拡大 */
-            height: 110px;
-        }
-        #reset-btn {
-            padding: 12px 30px; 
-        }
+        .modal-buttons { flex-direction: column; gap: 10px; }
     }
 </style>
 </head>
@@ -281,9 +271,92 @@
 
     <div id="center-area">
         <div id="bird">
-            <div id="bird-whole" class="bird-svg-container"></div>
-            <div id="bird-l" class="bird-svg-container bird-part bird-left" style="display:none;"></div>
-            <div id="bird-r" class="bird-svg-container bird-part bird-right" style="display:none;"></div>
+            <div id="bird-whole" class="bird-svg-container">
+                <svg viewBox="0 0 200 200" width="100%" height="100%">
+                    <defs>
+                        <clipPath id="birdClipWhole">
+                            <path d="M 45 80 C 50 45, 80 40, 100 50 C 120 60, 140 80, 155 95 C 130 135, 80 150, 45 125 C 30 110, 35 90, 45 80 Z" />
+                        </clipPath>
+                    </defs>
+                    <path d="M 140 90 L 195 115 L 185 130 L 130 110 Z" fill="#444d56"/>
+                    <path d="M 145 100 L 195 125 L 185 135 L 135 115 Z" fill="#363c43"/>
+                    <path d="M 80 140 L 75 170 L 65 175 M 75 170 L 85 175" stroke="#d49a2a" stroke-width="3" fill="none" stroke-linecap="round"/>
+                    <path d="M 100 135 L 95 165 L 85 170 M 95 165 L 105 170" stroke="#d49a2a" stroke-width="3" fill="none" stroke-linecap="round"/>
+                    <path d="M 45 80 C 50 45, 80 40, 100 50 C 120 60, 140 80, 155 95 C 130 135, 80 150, 45 125 C 30 110, 35 90, 45 80 Z" fill="#ffffff"/>
+                    <g clip-path="url(#birdClipWhole)">
+                        <path d="M 30 95 Q 80 120 150 95" stroke="#333" stroke-width="2.5" fill="none"/>
+                        <path d="M 30 105 Q 80 130 150 105" stroke="#333" stroke-width="2.5" fill="none"/>
+                        <path d="M 30 115 Q 80 140 150 115" stroke="#333" stroke-width="2.5" fill="none"/>
+                        <path d="M 30 125 Q 80 150 150 125" stroke="#333" stroke-width="2.5" fill="none"/>
+                        <path d="M 40 135 Q 80 160 140 135" stroke="#333" stroke-width="2.5" fill="none"/>
+                    </g>
+                    <path d="M 45 80 C 50 45, 80 40, 100 50 C 120 60, 140 80, 155 95 C 130 90, 90 85, 45 80 Z" fill="#6c7782"/>
+                    <path d="M 90 75 C 110 75, 135 95, 150 120 C 125 110, 100 95, 90 75 Z" fill="#525b64"/>
+                    <circle cx="60" cy="65" r="3.5" fill="#111"/>
+                    <circle cx="60" cy="65" r="5" fill="none" stroke="#f1c40f" stroke-width="2"/>
+                    <path class="beak-closed" d="M 45 72 L 15 76 L 45 82 Z" fill="#333"/>
+                    <path class="beak-open" d="M 45 72 L 15 62 L 38 75 Z M 45 82 L 15 92 L 40 80 Z" fill="#333" style="display:none;"/>
+                    <path class="beak-open" d="M 38 75 L 15 77 L 40 80 Z" fill="#c0392b" style="display:none;"/>
+                </svg>
+            </div>
+            
+            <div id="bird-l" class="bird-svg-container bird-part bird-left" style="display:none;">
+                <svg viewBox="0 0 200 200" width="100%" height="100%">
+                    <defs>
+                        <clipPath id="birdClipL">
+                            <path d="M 45 80 C 50 45, 80 40, 100 50 C 120 60, 140 80, 155 95 C 130 135, 80 150, 45 125 C 30 110, 35 90, 45 80 Z" />
+                        </clipPath>
+                    </defs>
+                    <path d="M 140 90 L 195 115 L 185 130 L 130 110 Z" fill="#444d56"/>
+                    <path d="M 145 100 L 195 125 L 185 135 L 135 115 Z" fill="#363c43"/>
+                    <path d="M 80 140 L 75 170 L 65 175 M 75 170 L 85 175" stroke="#d49a2a" stroke-width="3" fill="none" stroke-linecap="round"/>
+                    <path d="M 100 135 L 95 165 L 85 170 M 95 165 L 105 170" stroke="#d49a2a" stroke-width="3" fill="none" stroke-linecap="round"/>
+                    <path d="M 45 80 C 50 45, 80 40, 100 50 C 120 60, 140 80, 155 95 C 130 135, 80 150, 45 125 C 30 110, 35 90, 45 80 Z" fill="#ffffff"/>
+                    <g clip-path="url(#birdClipL)">
+                        <path d="M 30 95 Q 80 120 150 95" stroke="#333" stroke-width="2.5" fill="none"/>
+                        <path d="M 30 105 Q 80 130 150 105" stroke="#333" stroke-width="2.5" fill="none"/>
+                        <path d="M 30 115 Q 80 140 150 115" stroke="#333" stroke-width="2.5" fill="none"/>
+                        <path d="M 30 125 Q 80 150 150 125" stroke="#333" stroke-width="2.5" fill="none"/>
+                        <path d="M 40 135 Q 80 160 140 135" stroke="#333" stroke-width="2.5" fill="none"/>
+                    </g>
+                    <path d="M 45 80 C 50 45, 80 40, 100 50 C 120 60, 140 80, 155 95 C 130 90, 90 85, 45 80 Z" fill="#6c7782"/>
+                    <path d="M 90 75 C 110 75, 135 95, 150 120 C 125 110, 100 95, 90 75 Z" fill="#525b64"/>
+                    <circle cx="60" cy="65" r="3.5" fill="#111"/>
+                    <circle cx="60" cy="65" r="5" fill="none" stroke="#f1c40f" stroke-width="2"/>
+                    <path class="beak-closed" d="M 45 72 L 15 76 L 45 82 Z" fill="#333"/>
+                    <path class="beak-open" d="M 45 72 L 15 62 L 38 75 Z M 45 82 L 15 92 L 40 80 Z" fill="#333" style="display:none;"/>
+                    <path class="beak-open" d="M 38 75 L 15 77 L 40 80 Z" fill="#c0392b" style="display:none;"/>
+                </svg>
+            </div>
+            
+            <div id="bird-r" class="bird-svg-container bird-part bird-right" style="display:none;">
+                <svg viewBox="0 0 200 200" width="100%" height="100%">
+                    <defs>
+                        <clipPath id="birdClipR">
+                            <path d="M 45 80 C 50 45, 80 40, 100 50 C 120 60, 140 80, 155 95 C 130 135, 80 150, 45 125 C 30 110, 35 90, 45 80 Z" />
+                        </clipPath>
+                    </defs>
+                    <path d="M 140 90 L 195 115 L 185 130 L 130 110 Z" fill="#444d56"/>
+                    <path d="M 145 100 L 195 125 L 185 135 L 135 115 Z" fill="#363c43"/>
+                    <path d="M 80 140 L 75 170 L 65 175 M 75 170 L 85 175" stroke="#d49a2a" stroke-width="3" fill="none" stroke-linecap="round"/>
+                    <path d="M 100 135 L 95 165 L 85 170 M 95 165 L 105 170" stroke="#d49a2a" stroke-width="3" fill="none" stroke-linecap="round"/>
+                    <path d="M 45 80 C 50 45, 80 40, 100 50 C 120 60, 140 80, 155 95 C 130 135, 80 150, 45 125 C 30 110, 35 90, 45 80 Z" fill="#ffffff"/>
+                    <g clip-path="url(#birdClipR)">
+                        <path d="M 30 95 Q 80 120 150 95" stroke="#333" stroke-width="2.5" fill="none"/>
+                        <path d="M 30 105 Q 80 130 150 105" stroke="#333" stroke-width="2.5" fill="none"/>
+                        <path d="M 30 115 Q 80 140 150 115" stroke="#333" stroke-width="2.5" fill="none"/>
+                        <path d="M 30 125 Q 80 150 150 125" stroke="#333" stroke-width="2.5" fill="none"/>
+                        <path d="M 40 135 Q 80 160 140 135" stroke="#333" stroke-width="2.5" fill="none"/>
+                    </g>
+                    <path d="M 45 80 C 50 45, 80 40, 100 50 C 120 60, 140 80, 155 95 C 130 90, 90 85, 45 80 Z" fill="#6c7782"/>
+                    <path d="M 90 75 C 110 75, 135 95, 150 120 C 125 110, 100 95, 90 75 Z" fill="#525b64"/>
+                    <circle cx="60" cy="65" r="3.5" fill="#111"/>
+                    <circle cx="60" cy="65" r="5" fill="none" stroke="#f1c40f" stroke-width="2"/>
+                    <path class="beak-closed" d="M 45 72 L 15 76 L 45 82 Z" fill="#333"/>
+                    <path class="beak-open" d="M 45 72 L 15 62 L 38 75 Z M 45 82 L 15 92 L 40 80 Z" fill="#333" style="display:none;"/>
+                    <path class="beak-open" d="M 38 75 L 15 77 L 40 80 Z" fill="#c0392b" style="display:none;"/>
+                </svg>
+            </div>
             <div id="note">ホーホケキョ♪</div>
         </div>
         <div id="kanji-naku">鳴</div>
@@ -319,93 +392,80 @@
         <div class="modal-content">
             <div class="modal-title-text">＼ 診断結果 ／</div>
             <div id="modal-text">あなたは〇〇タイプ！</div>
-            <button id="modal-close-btn">閉じる</button>
+            <div class="modal-buttons">
+                <button id="share-x-btn">𝕏 でポスト</button>
+                <button id="modal-close-btn">閉じる</button>
+            </div>
         </div>
     </div>
 
 <script>
-    const WAIT_TIME = 120000; 
+window.onload = function() {
+    var WAIT_TIME = 120000; 
 
-    const birdSVG = `
-    <svg viewBox="0 0 200 200" width="100%" height="100%">
-        <defs>
-            <clipPath id="birdClip">
-                <path d="M 45 80 C 50 45, 80 40, 100 50 C 120 60, 140 80, 155 95 C 130 135, 80 150, 45 125 C 30 110, 35 90, 45 80 Z" />
-            </clipPath>
-        </defs>
-        <path d="M 140 90 L 195 115 L 185 130 L 130 110 Z" fill="#444d56"/>
-        <path d="M 145 100 L 195 125 L 185 135 L 135 115 Z" fill="#363c43"/>
-        <path d="M 80 140 L 75 170 L 65 175 M 75 170 L 85 175" stroke="#d49a2a" stroke-width="3" fill="none" stroke-linecap="round"/>
-        <path d="M 100 135 L 95 165 L 85 170 M 95 165 L 105 170" stroke="#d49a2a" stroke-width="3" fill="none" stroke-linecap="round"/>
-        <path d="M 45 80 C 50 45, 80 40, 100 50 C 120 60, 140 80, 155 95 C 130 135, 80 150, 45 125 C 30 110, 35 90, 45 80 Z" fill="#ffffff"/>
-        <g clip-path="url(#birdClip)">
-            <path d="M 30 95 Q 80 120 150 95" stroke="#333" stroke-width="2.5" fill="none"/>
-            <path d="M 30 105 Q 80 130 150 105" stroke="#333" stroke-width="2.5" fill="none"/>
-            <path d="M 30 115 Q 80 140 150 115" stroke="#333" stroke-width="2.5" fill="none"/>
-            <path d="M 30 125 Q 80 150 150 125" stroke="#333" stroke-width="2.5" fill="none"/>
-            <path d="M 40 135 Q 80 160 140 135" stroke="#333" stroke-width="2.5" fill="none"/>
-        </g>
-        <path d="M 45 80 C 50 45, 80 40, 100 50 C 120 60, 140 80, 155 95 C 130 90, 90 85, 45 80 Z" fill="#6c7782"/>
-        <path d="M 90 75 C 110 75, 135 95, 150 120 C 125 110, 100 95, 90 75 Z" fill="#525b64"/>
-        <circle cx="60" cy="65" r="3.5" fill="#111"/>
-        <circle cx="60" cy="65" r="5" fill="none" stroke="#f1c40f" stroke-width="2"/>
-        <path class="beak-closed" d="M 45 72 L 15 76 L 45 82 Z" fill="#333"/>
-        <path class="beak-open" d="M 45 72 L 15 62 L 38 75 Z M 45 82 L 15 92 L 40 80 Z" fill="#333" style="display:none;"/>
-        <path class="beak-open" d="M 38 75 L 15 77 L 40 80 Z" fill="#c0392b" style="display:none;"/>
-    </svg>
-    `;
+    var sword = document.getElementById('sword');
+    var bird = document.getElementById('bird');
+    var birdWhole = document.getElementById('bird-whole');
+    var birdL = document.getElementById('bird-l');
+    var birdR = document.getElementById('bird-r');
+    var note = document.getElementById('note');
+    var kanjiNaku = document.getElementById('kanji-naku');
+    var charJo = document.getElementById('char-jo');
+    var charOnna = document.getElementById('char-onna');
+    var charKuchi = document.getElementById('char-kuchi');
     
-    document.getElementById('bird-whole').innerHTML = birdSVG;
-    document.getElementById('bird-l').innerHTML = birdSVG;
-    document.getElementById('bird-r').innerHTML = birdSVG;
+    var resultModal = document.getElementById('result-modal');
+    var modalText = document.getElementById('modal-text');
+    var modalCloseBtn = document.getElementById('modal-close-btn');
+    var shareXBtn = document.getElementById('share-x-btn');
 
-    const sword = document.getElementById('sword');
-    const bird = document.getElementById('bird');
-    const birdWhole = document.getElementById('bird-whole');
-    const birdL = document.getElementById('bird-l');
-    const birdR = document.getElementById('bird-r');
-    const note = document.getElementById('note');
-    const kanjiNaku = document.getElementById('kanji-naku');
-    const charJo = document.getElementById('char-jo');
-    const charOnna = document.getElementById('char-onna');
-    const charKuchi = document.getElementById('char-kuchi');
-    
-    const resultModal = document.getElementById('result-modal');
-    const modalText = document.getElementById('modal-text');
-    const modalCloseBtn = document.getElementById('modal-close-btn');
-
-    let gameActive = true;
-    let timerId;
+    var gameActive = true;
+    var timerId;
 
     function startIeyasuTimer() {
-        timerId = setTimeout(() => {
+        timerId = setTimeout(function() {
             if (!gameActive) return;
             gameActive = false;
             birdWhole.classList.add('singing-bird');
             note.classList.add('singing');
             sword.style.opacity = '0'; 
-            setTimeout(() => { sword.style.visibility = 'hidden'; }, 300);
+            setTimeout(function() { sword.style.visibility = 'hidden'; }, 300);
             
-            setTimeout(() => {
-                showResult("あなたは家康タイプ！");
+            setTimeout(function() {
+                showResult("家康");
             }, 1000);
         }, WAIT_TIME);
     }
     startIeyasuTimer();
 
-    function showResult(text) {
-        modalText.innerText = text;
+    function showResult(type) {
+        modalText.innerText = "あなたは" + type + "タイプ！";
+        
+        var shareText = "私は" + type + "タイプ！#ホトトギス診断\n";
+        
+        // ★ キャッシュ回避のため、結果ごとにURLの末尾にダミーパラメータ（?t=〇）を付与して別URLだと認識させる
+        var typeId = "n";
+        if (type === "秀吉") typeId = "h";
+        if (type === "家康") typeId = "i";
+        var shareUrl = "https://pia0314piagreendice.github.io/hototogisu/?t=" + typeId;
+        
+        var twitterIntentUrl = "https://twitter.com/intent/tweet?text=" + encodeURIComponent(shareText) + "&url=" + encodeURIComponent(shareUrl);
+        
+        shareXBtn.onclick = function() {
+            window.open(twitterIntentUrl, '_blank');
+        };
+
         resultModal.classList.add('show');
     }
 
-    modalCloseBtn.addEventListener('click', () => {
+    modalCloseBtn.addEventListener('click', function() {
         resultModal.classList.remove('show');
     });
 
-    // 当たり判定の余白も要素の拡大に合わせて 15 -> 20 へ少し広げました
-    function isColliding(el1, el2, padding = 20) {
-        const rect1 = el1.getBoundingClientRect();
-        const rect2 = el2.getBoundingClientRect();
+    function isColliding(el1, el2, padding) {
+        if (padding === undefined) padding = 20;
+        var rect1 = el1.getBoundingClientRect();
+        var rect2 = el2.getBoundingClientRect();
         return !(
             rect1.top + padding > rect2.bottom ||
             rect1.right - padding < rect2.left ||
@@ -415,42 +475,41 @@
     }
 
     function makeDraggable(element, onDrop) {
-        let currentX = 0, currentY = 0;
-        let initialX, initialY;
-        let isDragging = false;
+        var currentX = 0, currentY = 0;
+        var initialX, initialY;
+        var isDragging = false;
         
-        element.addEventListener('pointerdown', (e) => {
+        element.addEventListener('pointerdown', function(e) {
             if (!gameActive) return;
             isDragging = true;
             element.setPointerCapture(e.pointerId);
             element.style.transition = 'none';
             initialX = e.clientX - currentX;
             initialY = e.clientY - currentY;
-            element.style.transform = `translate(${currentX}px, ${currentY}px) scale(1.1)`;
+            element.style.transform = "translate(" + currentX + "px, " + currentY + "px) scale(1.1)";
             element.style.zIndex = 1000;
         });
 
-        element.addEventListener('pointermove', (e) => {
+        element.addEventListener('pointermove', function(e) {
             if (!isDragging || !gameActive) return;
             currentX = e.clientX - initialX;
             currentY = e.clientY - initialY;
-            element.style.transform = `translate(${currentX}px, ${currentY}px) scale(1.1)`;
+            element.style.transform = "translate(" + currentX + "px, " + currentY + "px) scale(1.1)";
         });
 
-        element.addEventListener('pointerup', (e) => {
+        element.addEventListener('pointerup', function(e) {
             if (!isDragging) return;
             isDragging = false;
             element.releasePointerCapture(e.pointerId);
             element.style.transition = 'opacity 0.3s'; 
-            element.style.transform = `translate(${currentX}px, ${currentY}px) scale(1)`;
+            element.style.transform = "translate(" + currentX + "px, " + currentY + "px) scale(1)";
             if (gameActive && onDrop) {
                 onDrop(element, currentX, currentY);
             }
         });
     }
 
-    makeDraggable(sword, (draggedElement) => {
-        // 鳥を斬る判定（信長）
+    makeDraggable(sword, function(draggedElement) {
         if (isColliding(draggedElement, bird, 20)) {
             gameActive = false;
             clearTimeout(timerId);
@@ -460,46 +519,42 @@
             birdR.style.display = 'block';
             
             sword.style.opacity = '0';
-            setTimeout(() => { sword.style.visibility = 'hidden'; }, 300);
+            setTimeout(function() { sword.style.visibility = 'hidden'; }, 300);
             
-            setTimeout(() => {
+            setTimeout(function() {
                 birdL.classList.add('cut-left');
                 birdR.classList.add('cut-right');
             }, 50);
 
-            setTimeout(() => {
-                showResult("あなたは信長タイプ！");
+            setTimeout(function() {
+                showResult("信長");
             }, 1000);
         }
-        // 「如」を斬る判定
         else if (charJo.style.visibility !== 'hidden' && isColliding(draggedElement, charJo, 15)) {
             charJo.style.visibility = 'hidden';
             charOnna.style.display = 'inline-block';
             charKuchi.style.display = 'inline-block';
             
             sword.style.opacity = '0';
-            setTimeout(() => { sword.style.visibility = 'hidden'; }, 300);
+            setTimeout(function() { sword.style.visibility = 'hidden'; }, 300);
             
-            setTimeout(() => {
-                // 要素が大きくなったので、飛び散る距離も広げる
+            setTimeout(function() {
                 charOnna.style.transform = 'translateX(-25px) rotate(-15deg)';
                 charKuchi.style.transform = 'translateX(25px) rotate(15deg)';
             }, 50);
 
-            // 「口」を鳥へ運ぶ判定（秀吉）
-            makeDraggable(charKuchi, (draggedKuchi, curX, curY) => {
-                const bRect = bird.getBoundingClientRect();
-                const kRect = draggedKuchi.getBoundingClientRect();
+            makeDraggable(charKuchi, function(draggedKuchi, curX, curY) {
+                var bRect = bird.getBoundingClientRect();
+                var kRect = draggedKuchi.getBoundingClientRect();
                 
-                const kCenterX = kRect.left + kRect.width / 2;
-                const kCenterY = kRect.top + kRect.height / 2;
-                const bCenterX = bRect.left + bRect.width / 2;
-                const bCenterY = bRect.top + bRect.height / 2;
+                var kCenterX = kRect.left + kRect.width / 2;
+                var kCenterY = kRect.top + kRect.height / 2;
+                var bCenterX = bRect.left + bRect.width / 2;
+                var bCenterY = bRect.top + bRect.height / 2;
 
-                // 巨大化に対応するため、判定エリアを拡大
-                const isLeft = kCenterX < bCenterX;
-                const isNearX = (bCenterX - kCenterX) < 320; // 250 -> 320 に拡大
-                const isNearY = Math.abs(bCenterY - kCenterY) < 220; // 150 -> 220 に拡大
+                var isLeft = kCenterX < bCenterX;
+                var isNearX = (bCenterX - kCenterX) < 320; 
+                var isNearY = Math.abs(bCenterY - kCenterY) < 220; 
 
                 if (isLeft && isNearX && isNearY) {
                     gameActive = false;
@@ -508,33 +563,33 @@
                     draggedKuchi.style.transition = 'transform 0.4s ease-in, opacity 0.4s ease-in';
                     birdWhole.style.transition = 'transform 0.4s ease-in, opacity 0.4s ease-in';
                     
-                    // 鳥のサイズが変わってもくちばしの位置へ吸い込まれるように割合で計算
-                    const moveX = (bRect.left + bRect.width * 0.15) - kRect.left;
-                    const moveY = (bRect.top + bRect.height * 0.5 - kRect.height / 2) - kRect.top;
+                    var moveX = (bRect.left + bRect.width * 0.15) - kRect.left;
+                    var moveY = (bRect.top + bRect.height * 0.5 - kRect.height / 2) - kRect.top;
                     
                     curX += moveX;
                     curY += moveY;
                     
-                    draggedKuchi.style.transform = `translate(${curX}px, ${curY}px) scale(1.5)`;
+                    draggedKuchi.style.transform = "translate(" + curX + "px, " + curY + "px) scale(1.5)";
                     draggedKuchi.style.opacity = '0';
                     
                     birdWhole.style.transform = 'translateX(20px) scale(0.9)';
                     birdWhole.style.opacity = '0';
                     
-                    setTimeout(() => {
+                    setTimeout(function() {
                         draggedKuchi.style.display = 'none';
                         bird.style.display = 'none';
                         kanjiNaku.style.display = 'block';
                         kanjiNaku.style.animation = 'combineAnim 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards';
                         
-                        setTimeout(() => {
-                            showResult("あなたは秀吉タイプ！");
+                        setTimeout(function() {
+                            showResult("秀吉");
                         }, 1600);
                     }, 400); 
                 }
             });
         }
     });
+};
 </script>
 </body>
 </html>
