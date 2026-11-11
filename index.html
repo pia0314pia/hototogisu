@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>不如帰診断</title>
 
-<!-- ★ X(Twitter)などのSNSでシェアされた時に画像を表示するための設定 -->
+<!-- X(Twitter)などのSNSでシェアされた時に画像を表示するための設定 -->
 <meta property="og:title" content="不如帰診断">
 <meta property="og:description" content="あなたは信長？秀吉？家康？ホトトギスでわかるあなたのタイプ！">
 <meta property="og:url" content="https://pia0314piagreendice.github.io/hototogisu/">
@@ -13,6 +13,7 @@
 <meta name="twitter:card" content="summary_large_image">
 
 <style>
+    /* 古いブラウザでも絶対にエラーを起こさない安全なCSS設計 */
     body {
         font-family: 'Hiragino Mincho ProN', 'Yu Mincho', serif;
         background-color: #fdfaf5;
@@ -20,36 +21,34 @@
         display: flex;
         flex-direction: column;
         align-items: center;
-        justify-content: space-between;
-        /* 画面外に消えないよう、固定高さではなく最低高さを指定し、はみ出たらスクロールを許可 */
+        justify-content: flex-start;
         min-height: 100vh;
-        min-height: 100dvh; 
         margin: 0;
-        padding: 2vh 10px;
+        padding: 20px 10px 40px;
         box-sizing: border-box;
-        overflow-x: hidden; 
-        overflow-y: auto; 
+        overflow-x: hidden;
+        overflow-y: auto; /* 万が一はみ出てもスクロールで表示可能にする */
         user-select: none;
         -webkit-user-select: none;
         touch-action: manipulation;
     }
 
     #title-area {
-        flex-shrink: 0;
-        font-size: min(9vw, 42px); 
+        font-size: 38px; 
         font-weight: bold;
         text-align: center;
         z-index: 10;
         background: #2c3e50;
         color: #fdfdfd;
-        padding: 8px 30px 12px;
+        padding: 10px 40px 15px;
         border: 2px solid #d4af37;
         border-radius: 8px;
         box-shadow: 0 4px 10px rgba(0,0,0,0.3);
         text-shadow: 2px 2px 4px rgba(0,0,0,0.6);
         position: relative;
         line-height: 1.2;
-        margin-top: 1vh;
+        margin-bottom: 20px;
+        flex-shrink: 0;
     }
     #title-area::before {
         content: '';
@@ -89,20 +88,19 @@
     }
 
     #center-area {
-        flex-grow: 1;
-        width: 100%;
         display: flex;
         justify-content: center;
         align-items: center;
         position: relative;
-        min-height: 200px;
+        flex-grow: 1;
+        width: 100%;
+        min-height: 250px;
     }
     
     #bird {
         position: relative;
-        /* 鳥のサイズを少し控えめにし、画面に収まりやすく調整 */
-        width: min(55vw, 32vh, 260px);
-        height: min(55vw, 32vh, 260px);
+        width: 250px;
+        height: 250px;
     }
     
     .bird-svg-container {
@@ -124,14 +122,14 @@
 
     #note {
         position: absolute;
-        font-size: min(5vw, 22px);
+        font-size: 20px;
         font-weight: bold;
         color: #ff4081;
         background: rgba(255, 255, 255, 0.95);
         border: 2px solid #ff4081;
-        padding: 6px 12px;
+        padding: 6px 14px;
         border-radius: 20px;
-        top: -15px; right: -20%;
+        top: -15px; right: -30px;
         opacity: 0;
         transition: opacity 0.5s, transform 0.5s;
         white-space: nowrap;
@@ -152,7 +150,7 @@
 
     #kanji-naku {
         display: none;
-        font-size: min(50vw, 25vh, 200px);
+        font-size: 180px;
         font-weight: bold;
         background: linear-gradient(to bottom, #d4af37, #b8860b);
         -webkit-background-clip: text;
@@ -167,18 +165,18 @@
     }
 
     #bottom-area {
-        flex-shrink: 0;
         display: flex;
         flex-direction: column;
         align-items: center;
-        gap: 1.5vh;
-        margin-bottom: 1vh;
+        gap: 15px;
+        margin-top: 20px;
+        z-index: 50;
+        flex-shrink: 0;
     }
     
     #sword {
-        /* 刀のサイズも縦幅に合わせて収まりやすく調整 */
-        width: min(28vw, 13vh, 130px);
-        height: min(28vw, 13vh, 130px);
+        width: 120px;
+        height: 120px;
         cursor: grab;
         position: relative;
         z-index: 200;
@@ -189,12 +187,49 @@
     #sword:active { cursor: grabbing; }
 
     #reset-btn {
-        padding: 10px 30px;
-        font-size: min(4vw, 16px);
+        padding: 12px 35px;
+        font-size: 16px;
         font-weight: bold;
         cursor: pointer;
         background-color: #4a4a4a;
         color: white;
         border: 2px solid #333;
         border-radius: 6px;
-        box-shadow
+        box-shadow: 0 3px 5px rgba(0,0,0,0.3);
+        transition: transform 0.1s;
+    }
+    #reset-btn:active { transform: scale(0.95); }
+
+    #result-modal {
+        position: fixed;
+        top: 0; left: 0; width: 100%; height: 100%;
+        background: rgba(0, 0, 0, 0.6);
+        display: flex;
+        justify-content: center; align-items: center;
+        z-index: 1000;
+        opacity: 0; pointer-events: none;
+        transition: opacity 0.3s ease;
+    }
+    #result-modal.show {
+        opacity: 1; pointer-events: auto;
+    }
+    
+    .modal-content {
+        background: #fdfaf5;
+        padding: 30px 40px;
+        border-radius: 12px;
+        text-align: center;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        border: 4px solid #d4af37;
+        transform: scale(0.8);
+        transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+    #result-modal.show .modal-content { transform: scale(1); }
+    .modal-title-text { font-size: 18px; color: #555; margin-bottom: 10px; }
+    
+    #modal-text {
+        font-size: 30px;
+        font-weight: bold;
+        color: #d32f2f;
+        margin-bottom: 25px;
+        text-shadow: 1px 1
